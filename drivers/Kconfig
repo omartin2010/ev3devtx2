@@ -56,6 +56,9 @@ source "drivers/i2c/Kconfig"
 
 source "drivers/spi/Kconfig"
 
+# added EV3DEV
+source "drivers/lego/Kconfig"
+
 source "drivers/spmi/Kconfig"
 
 source "drivers/hsi/Kconfig"
