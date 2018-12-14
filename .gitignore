@@ -1,4 +1,4 @@
-# List directories in the nvidia sources
+# Ignore these original NVIDIA directories
 android/
 arch/
 block/
@@ -18,13 +18,12 @@ Kbuild
 Kconfig
 kernel/
 lib/
-.mailmap
 MAINTAINERS
 Makefile
 mm/
 net/
-NVIDIA-REVIEWERS
 NVIDIA-README
+NVIDIA-REVIEWERS
 REPORTING-BUGS
 rt-patches/
 samples/
@@ -35,6 +34,8 @@ tools/
 usr/
 virt/
 
-# git files that we don't want to ignore even if they are dot-files
+# Add these files...
 !.gitignore
 !.gitmodules
+!.mailmap
+!.cocciconfig.
