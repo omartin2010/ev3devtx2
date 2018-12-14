@@ -20,6 +20,7 @@ kernel/
 lib/
 MAINTAINERS
 Makefile
+.mailmap
 mm/
 net/
 NVIDIA-README
