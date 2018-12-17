@@ -1,3 +1,12 @@
+# Ignore kernel and module temp build files
+vmlinux*
+.vmlinux*
+.version
+.tmp*
+*.swp
+System.map
+[Mm]odule*
+.missing-syscalls.d
 # Ignore these original NVIDIA directories
 android/
 arch/
