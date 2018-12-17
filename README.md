@@ -37,7 +37,7 @@ Look for the section on SPI and some articles on how to enable SPI on the Jetson
       nvidia,tx-clk-tap-delay = <0x0>;
     };
 ```
-Special thanks to [@dlech](https://github.com/dlech) and [@WasabiFan](https://github.com/WasabiFan] from the [ev3dev project](http://www.ev3dev.org), as well as [@mattallen37](https://github.com/mattallen37) from [Dexter Industries](http://dexterindustries.com). And also to [JetsonHacks](https://www.jetsonhacks.com/2018/07/05/jetson-tx2-build-kernel-for-l4t-28-2-1-updated/) for the inspiration and mostly this particular article on how to locally compile, on the device (which is what I've done), the kernel in order to configure it so that it supports in the first place, SPI and then BrickPi3.
+Special thanks to [@dlech](https://github.com/dlech) and [@WasabiFan](https://github.com/WasabiFan) from the [ev3dev project](http://www.ev3dev.org), as well as [@mattallen37](https://github.com/mattallen37) from [Dexter Industries](http://dexterindustries.com). And also to [JetsonHacks](https://www.jetsonhacks.com/2018/07/05/jetson-tx2-build-kernel-for-l4t-28-2-1-updated/) for the inspiration and mostly this particular article on how to locally compile, on the device (which is what I've done), the kernel in order to configure it so that it supports in the first place, SPI and then BrickPi3.
 
 TODO, among other things
 - [ ] Eventually configure the device tree with overlays so that it can be more automated.
