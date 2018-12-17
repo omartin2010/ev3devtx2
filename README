@@ -2,6 +2,40 @@ Project for the EV3DEV drivers.
 <<<<<<< HEAD
 This is the dev branch where the work happens. Work will be moved to master when something is somewhat functional. 
 =======
-This master branch isn't working. Move the the dev branch for latest commits until there's a working version.
->>>>>>> 5f70352216d21cff7ceae3a40dc6a1b3b91abc82
-Contributions are welcome :)
+First working version is with kernel 4.4.38, and complete version is 4.4.38-ev3dev-xenial-tx2-2.3.1+.
+Image is included, once you have it you can copy it and replace /boot/Image... and make sure to adapt dts/dtc file also so that the SPI device is accessible to the lego driver.
+Specifically, the file to change is /boot/dtb/tegra186-quill-p3310-1000-c03-00-base.dtb.
+
+Look for the section on SPI and some articles on how to enable SPI on the Jetson TX2.
+
+ spi@3240000 {
+  reg = <0x0 0x3240000 0x0 0x10000>;
+  dmas = <0x19 0x12 0x19 0x12>;
+  interrupts = <0x0 0x27 0x4>;
+  compatible = "nvidia,tegra186-spi";
+  clock-names = "spi", "pll_p", "clk_m";
+  reset-names = "spi";
+  clocks = <0xd 0x4a 0xd 0x10d 0xd 0x261>;
+  #spi-max-frequency = <500000> ;#
+  nvidia,dma-request-selector = <0x19 0x12>;
+  resets = <0xd 0x2b>;
+  status = "okay";
+  #address-cells = <0x1>;
+  phandle = <0x7d>;
+  nvidia,clk-parents = "pll_p", "clk_m";
+  #stream-id-cells = <0x1>;
+  #size-cells = <0x0>;
+  dma-names = "rx", "tx";
+  linux,phandle = <0x7d>;
+#    spi@0 {
+      compatible = "ev3dev,brickpi3","spidev";
+      reg = <0>;
+      spi-max-frequency = <500000>;
+      nvidia,enable-hw-based-cs;
+      nvidia,cs-setup-clk-count = <0x1e>;
+      nvidia,cs-hold-clk-count = <0x1e>;
+      nvidia,rx-clk-tap-delay = <0x1f>;
+      nvidia,tx-clk-tap-delay = <0x0>;
+    };#
+
+Changes to that file are 
