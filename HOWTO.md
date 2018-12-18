@@ -2,6 +2,45 @@
 
 These steps worked for me, there might be better ways of doing it.
 
+## Device Tree Adjustments
+1. Until I've figured out the device tree business on linux (and how to do overlays, etc.), I do things manually.
+2. You therefore need to adapt the dts/dtc file also so that SPI is accessible to the lego driver and is available on the J21 header of the Jetson TX2. Specifically, the file to change is /boot/dtb/tegra186-quill-p3310-1000-c03-00-base.dtb.
+
+Look for the section on SPI and some articles on how to enable SPI on the Jetson TX2.
+
+```
+ spi@3240000 {
+  reg = <0x0 0x3240000 0x0 0x10000>;
+  dmas = <0x19 0x12 0x19 0x12>;
+  interrupts = <0x0 0x27 0x4>;
+  compatible = "nvidia,tegra186-spi";
+  clock-names = "spi", "pll_p", "clk_m";
+  reset-names = "spi";
+  clocks = <0xd 0x4a 0xd 0x10d 0xd 0x261>;
+  spi-max-frequency = <500000> ;     # NOT SURE IF IT REALLY NEEDS TO BE IN THE PARENT DEVICE
+  nvidia,dma-request-selector = <0x19 0x12>;
+  resets = <0xd 0x2b>;
+  status = "okay";
+  #address-cells = <0x1>;
+  phandle = <0x7d>;
+  nvidia,clk-parents = "pll_p", "clk_m";
+  #stream-id-cells = <0x1>;
+  #size-cells = <0x0>;
+  dma-names = "rx", "tx";
+  linux,phandle = <0x7d>;
+    spi@0 {      # THIS SPI DEVICE NEEDS TO BE ADDED AND MOST THINGS BELOW.
+      compatible = "ev3dev,brickpi3","spidev";
+      reg = <0>;
+      spi-max-frequency = <500000>;  
+      nvidia,enable-hw-based-cs;
+      nvidia,cs-setup-clk-count = <0x1e>;
+      nvidia,cs-hold-clk-count = <0x1e>;
+      nvidia,rx-clk-tap-delay = <0x1f>;
+      nvidia,tx-clk-tap-delay = <0x0>;
+    };
+```
+3. Once this is done you can move to the next steps (software) + hardware.
+
 ## Software steps
 1. Download the kernel sources from NVIDIA for version of kernel 4.4.38. I didn't push it here, I'm not sure if the license allows to. You'll get that from L4T 28.2.1.
 2. Clone this repo, recursively, into /kernel/kernel-4.4/. Recursively will include the drivers/lego directory which points to this repo. You can point to the original repo too (on [ev3dev](https://github.com/ev3dev/lego-linux-drivers)) as I didn't do any change except the .localversion file which identifies is compiled kernel as running ev3dev.
